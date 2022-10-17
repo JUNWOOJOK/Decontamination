@@ -37,5 +37,5 @@ with open('test_contig','w') as file:
             n+=1
             if len(l) >= 0:
                 name=i.split()[0].lstrip('>')
-                i=f'>{CWD}-{n}-Tumor-{sequencing_center}'
+                i=f'>{CWD}-{n}-Blood-{sequencing_center}'
                 file.writelines([i.strip(),'\n',l,'\n'])
