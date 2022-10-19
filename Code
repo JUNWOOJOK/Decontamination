@@ -1,0 +1,1 @@
+diamond blastp -q cdhit_out   --threads 10  --db ~/blast/final_dmn/diamond_tax.dmnd --query-cover 50 --subject-cover 50 -f 6 qseqid qlen sseqid evalue staxids sscinames
