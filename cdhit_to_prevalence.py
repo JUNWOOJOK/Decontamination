@@ -6,8 +6,35 @@ input=sys.argv[1]
 blood_dir=sys.argv[2]
 tissue_dir=sys.argv[3]
 
+
+
 blood_file=[i.strip() for i in os.listdir(blood_dir) if 'TCGA' in i]
 tissue_file=[i.strip() for i in  os.listdir(tissue_dir) if 'TCGA' in i]
+
+blood_id=list(set(['-'.join(i.split('-')[0:3]) for  i in blood_file]))
+tissue_id=list(set(['-'.join(i.split('-')[0:3]) for  i in tissue_file]))
+
+
+total_id=blood_id+tissue_id
+x=collections.Counter(total_id)
+
+
+
+list_kkk=[]
+
+for i,l in x.items():
+    if l==2:
+        list_kkk.append(i.strip())
+
+total_count=len(list_kkk)
+
+
+
+
+
+
+
+
 
 
 
@@ -57,13 +84,25 @@ list_total=[]
 for i in aaa.values():
     list_total+=i
 
-total_tissue_count=len(set(['-'.join(i.split('-')[0:3]) for i in list_total if 'Normal' in i or 'Tumor' in i or 'Tissue' in i]))
-total_blood_count=len(set(['-'.join(i.split('-')[0:3]) for i in list_total if ('Blood') in i]))
+
+
+
+
+
+
+
+
 for key,value in aaa.items():
-    Tissue_count=len(set(['-'.join(i.split('-')[0:3]) for i in value if 'Tumor' in i or 'Normal' in i or 'Tissue' in i]))
-    Blood_count=len(set(['-'.join(i.split('-')[0:3]) for i in value if 'Blood' in i]))
-    my_dict[str(key)]=[Tissue_count/total_tissue_count,Blood_count/total_blood_count]
+    Tissue_count=len(set(['-'.join(i.split('-')[0:3]) for i in value if 'Tumor' in i or 'Normal' in i or 'Tissue' in i and ('-'.join(i.split('-')[0:3]) in list_kkk)]))
+    Blood_count=len(set(['-'.join(i.split('-')[0:3]) for i in value if 'Blood' in i and ('-'.join(i.split('-')[0:3]) in list_kkk)]))
+    my_dict[str(key)]=[Tissue_count/total_count,Blood_count/total_count]
+
+
+
+
+
 
 
 for i,l in my_dict.items():
     print(i,l[0],l[1],sep="\t")
+
